@@ -1,44 +1,26 @@
-import { customElement, property, LitElement, html, css } from 'lit-element';
-import Logo from '../../svg/oysters-logo.svg'
+import { customElement, property, LitElement, html, css, svg } from 'lit-element';
+import { unsafeSVG } from 'lit-html/directives/unsafe-svg'
+import OystersLogo from '~/svg/oysters-logo.svg'
+import OystersIcon from '~/svg/oysters-icon-space.svg'
 
 @customElement('app-root')
 export class AppRoot extends LitElement {
-  @property() message = 'Learn LitElement';
+  @property() brand = {
+    logo: OystersLogo,
+    icon: OystersIcon
+  }
+
+  @property() type = 'logo' as 'logo' | 'icon'
 
   static get styles() {
     return css`
-      h1 {
-        font-size: 4rem;
-      }
-      .wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        height: 100vh;
-        background-color: #2196f3;
-        background: linear-gradient(315deg, #b4d2ea 0%, #2196f3 100%);
-        font-size: 24px;
-      }
-      .link {
-        color: white;
-      }
     `;
   }
 
   render() {
     return html`
       <div class="wrapper">
-        <h1>LitElement + Snowpack</h1>
-        <p>Edit <code>src/app-root.ts</code> and save to reload.</p>
-        <a
-          class="link"
-          href="https://lit-element.polymer-project.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          ${this.message}
-        </a>
+        ${svg`${unsafeSVG(this.brand[this.type])}`}
       </div>
     `;
   }

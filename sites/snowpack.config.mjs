@@ -2,7 +2,8 @@
 export default {
   mount: {
     public: { url: '/', static: true },
-    src: { url: '/dist' }
+    src: { url: '/dist' },
+    '../svg': '/dist/svg',
   },
   plugins: [
     '@snowpack/plugin-babel',
@@ -14,7 +15,11 @@ export default {
         ...(process.versions.pnp ? { tsc: 'yarn pnpify tsc' } : {}),
       },
     ],
+    ['snowpack-plugin-raw-file-loader', { exts: ['.svg'] }],
   ],
+  alias: {
+    '~/svg': '../svg',
+  },
   routes: [
     /* Enable an SPA Fallback in development: */
     // {"match": "routes", "src": ".*", "dest": "/index.html"},

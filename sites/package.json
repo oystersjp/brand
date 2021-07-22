@@ -9,7 +9,8 @@
   "dependencies": {
     "lit-element": "^2.4.0",
     "lit-html": "^1.4.0",
-    "snowpack-plugin-raw-file-loader": "^1.0.9"
+    "snowpack-plugin-raw-file-loader": "^1.0.9",
+    "twind": "^0.16.16"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.13.0",

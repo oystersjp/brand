@@ -19,6 +19,7 @@ export default {
   ],
   alias: {
     '~/svg': '../svg',
+    '@/': './src/',
   },
   routes: [
     /* Enable an SPA Fallback in development: */

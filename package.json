@@ -1,0 +1,27 @@
+{
+  "name": "oysters-brand",
+  "version": "1.0.0",
+  "description": "## Logo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/oystersjp/brand.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oystersjp/brand/issues"
+  },
+  "homepage": "https://github.com/oystersjp/brand#readme",
+  "devDependencies": {
+    "husky": "^7.0.1",
+    "lint-staged": "^11.1.0"
+  },
+  "lint-staged": {
+    "sites/*": ["npm run --prefix sites fmt:eslint", "npm run --prefix sites fmt:prettier"]
+  }
+}

@@ -1,17 +1,19 @@
 import {
   customElement,
-  property,
-  LitElement,
   html,
-  svg,
+  LitElement,
+  property,
   query,
+  svg,
 } from 'lit-element';
 import { unsafeSVG } from 'lit-html/directives/unsafe-svg';
-import OystersLogo from '~/svg/oysters-logo-space.svg';
-import OystersIcon from '~/svg/oysters-icon-space.svg';
 import { apply, create, cssomSheet } from 'twind';
-import { svg2png } from './utils/svg2png';
+
+import OystersIcon from '~/svg/oysters-icon-space.svg';
+import OystersLogo from '~/svg/oysters-logo-space.svg';
+
 import { download } from './utils/download';
+import { svg2png } from './utils/svg2png';
 
 const sheet = cssomSheet({ target: new CSSStyleSheet() });
 const { tw } = create({ sheet });
@@ -49,7 +51,7 @@ export class AppRoot extends LitElement {
       </div>
       <button
         class="${tw(styles.button)}"
-        @click="${(e: Event) => this.download(e, 'png')}"
+        @click="${(e: Event) => this.download(e)}"
       >
         Download PNG
       </button>

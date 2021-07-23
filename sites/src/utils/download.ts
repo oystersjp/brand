@@ -2,14 +2,14 @@ export const download = ({
   url,
   filename,
 }: {
-  url: string;
-  filename: string;
+  url: string
+  filename: string
 }) => {
-  const anchorEl = document.createElement('a');
+  const anchorEl = document.createElement('a')
 
-  anchorEl.download = filename;
-  anchorEl.href = url;
-  anchorEl.target = '_blank';
+  anchorEl.download = filename
+  anchorEl.href = url
+  anchorEl.target = '_blank'
 
-  anchorEl.click();
-};
+  anchorEl.click()
+}

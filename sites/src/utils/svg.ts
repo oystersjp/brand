@@ -1,3 +1,18 @@
+export const resize = (
+  svgEl: SVGSVGElement,
+  { width, height }: { width: number; height: number }
+) => {
+  svgEl?.setAttribute('width', String(width))
+  svgEl?.setAttribute('height', String(height))
+}
+
+export const getSize = (
+  svgEl: SVGSVGElement
+): { width: number; height: number } => ({
+  width: svgEl.width.baseVal.value,
+  height: svgEl.height.baseVal.value,
+})
+
 export const svg2png = (
   svgEl: SVGSVGElement,
   options = {

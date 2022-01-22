@@ -1,2 +1,4 @@
 build/
 !*.*
+package*.json
+.prettierignore

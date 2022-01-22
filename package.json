@@ -22,6 +22,9 @@
     "lint-staged": "^11.1.0"
   },
   "lint-staged": {
-    "sites/*": ["npm run --prefix sites fmt:eslint", "npm run --prefix sites fmt:prettier"]
+    "sites/*": [
+      "npm run --prefix sites fmt:eslint",
+      "npm run --prefix sites fmt:prettier"
+    ]
   }
 }

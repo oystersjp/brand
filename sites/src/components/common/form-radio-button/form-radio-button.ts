@@ -1,15 +1,18 @@
-import { formRadio } from '@twind/forms'
 import { customElement, html, LitElement, property } from 'lit-element'
 import { create, cssomSheet } from 'twind'
+
+import { styles } from './styles'
 
 const sheet = cssomSheet({ target: new CSSStyleSheet() })
 const { tw } = create({ sheet })
 
-@customElement('form-radio')
-export class FormRadio extends LitElement {
+@customElement('form-radio-button')
+export class FormRadioButton extends LitElement {
   static styles = [sheet.target]
   @property({ type: String }) name = ''
   @property({ type: String }) value = ''
+  @property({ type: String }) id = ''
+  @property({ type: String }) ariaLabel = ''
   @property({ type: Boolean }) checked = false
 
   handleChange(e: Event) {
@@ -21,16 +24,21 @@ export class FormRadio extends LitElement {
 
   render() {
     return html`
-      <label class="${tw`flex items-center`}"
-        ><input
+      <div class="${tw(styles.formRadioInput)}">
+        <input
           type="radio"
           name="${this.name}"
+          id="${this.id}"
           value="${this.value}"
-          class="${tw`${formRadio}`}"
           .checked="${this.checked ? 'checked' : undefined}"
-          @change="${this.handleChange}" /><span class="${tw`ml-2`}"
-          ><slot></slot></span
-      ></label>
+          @change="${this.handleChange}"
+        />
+        <label
+          for="${this.id}"
+          aria-label="${this.ariaLabel ? this.ariaLabel : undefined}"
+          ><slot></slot
+        ></label>
+      </div>
     `
   }
 }

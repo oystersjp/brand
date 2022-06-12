@@ -1,4 +1,4 @@
-import '@/components/common/form-radio'
+import '@/components/common/form-radio-button'
 
 import {
   customElement,
@@ -13,7 +13,7 @@ import { unsafeSVG } from 'lit-html/directives/unsafe-svg'
 import { create, cssomSheet } from 'twind'
 
 import { download } from '@/utils/download'
-import { getSize, resize, svg2png } from '@/utils/svg'
+import { getSize, resize, svg2png, svg2svg } from '@/utils/svg'
 import OystersIconDark from '~/svg/oysters-icon-space.svg'
 import OystersIconLight from '~/svg/oysters-icon-space-white.svg'
 import OystersLogoDark from '~/svg/oysters-logo-space.svg'
@@ -95,14 +95,17 @@ export class OystersBrandEditor extends LitElement {
     }
   }
 
-  private async download(e: Event) {
+  private async download(e: Event, fileType: 'svg' | 'png') {
     e.preventDefault()
     if (!this.svgEl) return
 
     const { width, height, type, color } = this.input
 
     // Create PNG image URL
-    const url = await svg2png(this.svgEl, { width, height })
+    const url =
+      fileType === 'svg'
+        ? await svg2svg(this.svgEl)
+        : await svg2png(this.svgEl, { width, height })
 
     // Create filename
     const space = this.input.space ? 'space' : undefined
@@ -139,54 +142,93 @@ export class OystersBrandEditor extends LitElement {
 
   render() {
     return html`
-      <div class="${tw`container m-auto`}">
-        <h1 class="${tw`py-4 text-xl font-bold`}">Get Oysters Logos</h1>
-        <div class="${tw`grid grid-cols-2 gap-4`}">
+      <div class="${tw`m-auto max-w-[860px]`}">
+        <div
+          class="${tw`grid md:grid-cols-2 gap-4 p-7`}"
+          style="background: var(--oysters-colors-gray-200)"
+        >
           <div
-            id="canvas"
-            class="${tw`flex items-center justify-center shadow-inner ${styles.canvas}`}"
-            style="--svg-width: ${this.input.width}px;--svg-height: ${this.input
-              .height}px;"
+            class="${tw`relative flex items-center justify-center shadow-inner ${styles.canvas}`}"
           >
-            ${svg`${unsafeSVG(this.rawSVG)}`}
+            <div
+              id="canvas"
+              style="--svg-width: ${this.input.width}px;--svg-height: ${this
+                .input.height}px;"
+            >
+              ${svg`${unsafeSVG(this.rawSVG)}`}
+            </div>
+            <div
+              class="${tw`absolute bottom-0 right-0 flex flex-end space-x-2 p-2`}"
+            >
+              <button
+                class="${tw(styles.button)}"
+                @click="${(e: Event) => this.download(e, 'png')}"
+              >
+                PNG
+              </button>
+              <button
+                class="${tw(styles.button)}"
+                @click="${(e: Event) => this.download(e, 'svg')}"
+              >
+                SVG
+              </button>
+            </div>
           </div>
-          <form class="${tw`space-y-6`}">
+          <form class="${tw`space-y-2`}">
             <fieldset>
-              <legend class="${tw`text-xl py-4`}">ロゴの種類</legend>
-              <form-radio
-                name="type"
-                value="logo"
-                ?checked="${this.input.type === 'logo'}"
-                @change="${this.handleChange}"
-                >ロゴ</form-radio
-              >
-              <form-radio
-                name="type"
-                value="icon"
-                ?checked="${this.input.type === 'icon'}"
-                @change="${this.handleChange}"
-                >アイコン</form-radio
-              >
+              <legend class="${tw`text-l font-semibold`}">ロゴのタイプ</legend>
+              <div class="${tw`grid grid-cols-2 gap-2 py-3`}">
+                <form-radio-button
+                  name="type"
+                  id="logo-text"
+                  value="logo"
+                  ?checked="${this.input.type === 'logo'}"
+                  @change="${this.handleChange}"
+                  aria-label="ロゴテキスト"
+                  >${svg`${unsafeSVG(OystersLogoLight)}`}</form-radio-button
+                >
+                <form-radio-button
+                  name="type"
+                  id="logo-icon"
+                  value="icon"
+                  ?checked="${this.input.type === 'icon'}"
+                  @change="${this.handleChange}"
+                  aria-label="ロゴアイコン"
+                  >${svg`${unsafeSVG(OystersIconLight)}`}</form-radio-button
+                >
+              </div>
             </fieldset>
             <fieldset>
-              <legend class="${tw`text-xl py-4`}">色</legend>
-              <form-radio
-                name="color"
-                value="dark"
-                ?checked="${this.input.color === 'dark'}"
-                @change="${this.handleChange}"
-                >白背景用</form-radio
-              >
-              <form-radio
-                name="color"
-                value="light"
-                ?checked="${this.input.color === 'light'}"
-                @change="${this.handleChange}"
-                >黒背景用</form-radio
-              >
+              <legend class="${tw`text-l font-semibold`}">色</legend>
+              <div class="${tw`grid grid-cols-2 gap-2 py-3`}">
+                <form-radio-button
+                  name="color"
+                  id="color-dark"
+                  value="dark"
+                  ?checked="${this.input.color === 'dark'}"
+                  @change="${this.handleChange}"
+                  ><i
+                    class="${tw(styles.icon.lightColor)}"
+                    aria-hidden="true"
+                  ></i
+                  ><span class="${tw`ml-2`}">明るい</span></form-radio-button
+                >
+                <form-radio-button
+                  name="color"
+                  id="color-light"
+                  value="light"
+                  ?checked="${this.input.color === 'light'}"
+                  @change="${this.handleChange}"
+                  ><i
+                    class="${tw(styles.icon.darkColor)}"
+                    aria-hidden="true"
+                  ></i
+                  ><span class="${tw`ml-2`}">暗い</span></form-radio-button
+                >
+              </div>
             </fieldset>
             <fieldset>
-              <legend class="${tw`text-xl py-4`}">大きさ</legend>
+              <legend class="${tw`text-l font-semibold pb-4`}">大きさ</legend>
               <label class="${tw`inline-flex items-center`}"
                 ><span class="${tw`mr-2`}">W</span
                 ><input
@@ -206,26 +248,6 @@ export class OystersBrandEditor extends LitElement {
               /></label>
             </fieldset>
           </form>
-          <div class="${tw`col-span-2`}">
-            <button
-              class="${tw(styles.button)}"
-              @click="${(e: Event) => this.download(e)}"
-            >
-              Copy SVG
-            </button>
-            <button
-              class="${tw(styles.button)}"
-              @click="${(e: Event) => this.download(e)}"
-            >
-              Download PNG
-            </button>
-            <button
-              class="${tw(styles.button)}"
-              @click="${(e: Event) => this.download(e)}"
-            >
-              Download SVG
-            </button>
-          </div>
         </div>
       </div>
     `

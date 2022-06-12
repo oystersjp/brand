@@ -37,5 +37,6 @@ export default {
   },
   buildOptions: {
     /* ... */
+    baseUrl: '/brand',
   },
 }

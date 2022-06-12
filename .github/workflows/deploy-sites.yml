@@ -1,0 +1,26 @@
+name: Deploy Sites
+
+on:
+  push:
+    branches:
+      - master
+      # This is temporary configure for testing
+      - feature/site
+
+jobs:
+  deploy-to-github-pages:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: sites
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: ".node-version"
+      - run: npm ci
+      - run: npm run build
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: sites/build

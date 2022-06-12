@@ -29,7 +29,7 @@ export const styles = {
       content: '';
       width: var(--width);
       height: var(--width);
-      background-image: url('/icon_check.svg');
+      background-image: url('./icon_check.svg');
       background-size: cover;
       position: absolute;
       top: calc(var(--width) * 0.5 * -1);

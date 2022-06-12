@@ -14,7 +14,7 @@ export const styles = {
       ${apply`mr-1`}
       content: '';
       display: inline-block;
-      background-image: url('/icon_download.svg');
+      background-image: url('./icon_download.svg');
       width: 24px;
       height: 24px;
     }

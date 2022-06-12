@@ -30,10 +30,17 @@ function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symb
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-import './components/oysters-brand-editor/index.js';
-import { forms } from '../../_snowpack/pkg/@twind/forms.js';
-import { customElement, html, LitElement } from '../../_snowpack/pkg/lit-element.js';
-import { apply, create, cssomSheet, setup } from '../../_snowpack/pkg/twind.js';
+import '../common/form-radio-button/index.js';
+import { customElement, html, LitElement, property, query, state, svg } from '../../../_snowpack/pkg/lit-element.js';
+import { unsafeSVG } from '../../../_snowpack/pkg/lit-html/directives/unsafe-svg.js';
+import { create, cssomSheet } from '../../../_snowpack/pkg/twind.js';
+import { download as _download } from '../../utils/download.js';
+import { getSize, resize as _resize, svg2png, svg2svg } from '../../utils/svg.js';
+import OystersIconDark from '../../svg/oysters-icon-space.js';
+import OystersIconLight from '../../svg/oysters-icon-space-white.js';
+import OystersLogoDark from '../../svg/oysters-logo-space.js';
+import OystersLogoLight from '../../svg/oysters-logo-space-white.js';
+import { styles } from './styles.js';
 const sheet = cssomSheet({
   target: new CSSStyleSheet()
 });
@@ -42,43 +49,8 @@ const {
 } = create({
   sheet
 });
-setup({
-  mode: 'strict',
-  theme: {
-    extend: {
-      colors: colors => ({ ...colors,
-        oysters: {
-          white: '#fff',
-          gray: {
-            100: '#363B42',
-            200: '#292F36'
-          },
-          blue: {
-            100: '#57cbcc'
-          }
-        }
-      })
-    }
-  },
-  plugins: {
-    forms
-  },
-  preflight: (preflight, {
-    theme
-  }) => ({ ...preflight,
-    ':root': {
-      '--oysters-colors-white': theme('colors.oysters.white'),
-      // theme()でextendしたカラーコードが取得できないので、CSS Variableとしてセット
-      // NOTE: https://github.com/tw-in-js/twind/issues/185
-      '--oysters-colors-gray-100': theme('colors.oysters.gray.100'),
-      '--oysters-colors-gray-200': theme('colors.oysters.gray.200'),
-      '--oysters-colors-blue-100': theme('colors.oysters.blue.100')
-    },
-    html: apply`bg-oysters-gray-100 text-oysters-white`
-  })
-});
-export let AppRoot = _decorate([customElement('app-root')], function (_initialize, _LitElement) {
-  class AppRoot extends _LitElement {
+export let OystersBrandEditor = _decorate([customElement('oysters-brand-editor')], function (_initialize, _LitElement) {
+  class OystersBrandEditor extends _LitElement {
     constructor(...args) {
       super(...args);
 
@@ -88,7 +60,7 @@ export let AppRoot = _decorate([customElement('app-root')], function (_initializ
   }
 
   return {
-    F: AppRoot,
+    F: OystersBrandEditor,
     d: [{
       kind: "field",
       static: true,
@@ -100,25 +72,271 @@ export let AppRoot = _decorate([customElement('app-root')], function (_initializ
 
     }, {
       kind: "field",
-      key: "year",
+      decorators: [query('#canvas svg')],
+      key: "svgEl",
 
       value() {
-        return new Date().getFullYear();
+        return null;
       }
 
+    }, {
+      kind: "field",
+      decorators: [state()],
+      key: "DEFAULT_WIDTH",
+
+      value() {
+        return 300;
+      }
+
+    }, {
+      kind: "field",
+      decorators: [state()],
+      key: "forceUpdateSize",
+
+      value() {
+        return false;
+      }
+
+    }, {
+      kind: "field",
+      decorators: [property({
+        reflect: true,
+        type: Object
+      })],
+      key: "input",
+
+      value() {
+        return {
+          type: 'logo',
+          color: 'dark',
+          width: 100,
+          height: 100,
+          space: true
+        };
+      }
+
+    }, {
+      kind: "get",
+      decorators: [state()],
+      key: "rawSVG",
+      value: function rawSVG() {
+        const svg = {
+          logo: {
+            dark: OystersLogoDark,
+            light: OystersLogoLight
+          },
+          icon: {
+            dark: OystersIconDark,
+            light: OystersIconLight
+          }
+        };
+        return svg[this.input.type][this.input.color];
+      }
+    }, {
+      kind: "method",
+      key: "resize",
+      value: function resize({
+        direction,
+        value
+      }) {
+        if (!this.svgEl) return;
+        const actualSize = this.getSvgSize();
+        const ratio = value / actualSize[direction];
+        const opposite = direction === 'width' ? 'height' : 'width';
+        const newSize = {
+          [direction]: value,
+          [opposite]: Math.round(actualSize[opposite] * ratio)
+        };
+
+        _resize(this.svgEl, newSize);
+
+        this.input = { ...this.input,
+          ...newSize
+        };
+      }
+    }, {
+      kind: "method",
+      key: "firstUpdated",
+      value: function firstUpdated() {
+        this.resize({
+          direction: 'width',
+          value: this.DEFAULT_WIDTH
+        });
+      }
+    }, {
+      kind: "method",
+      key: "getSvgSize",
+      value: function getSvgSize() {
+        const size = this.svgEl ? getSize(this.svgEl) : null;
+        return {
+          width: size?.width || 1,
+          height: size?.height || 1
+        };
+      }
+    }, {
+      kind: "method",
+      key: "download",
+      value: async function download(e, fileType) {
+        e.preventDefault();
+        if (!this.svgEl) return;
+        const {
+          width,
+          height,
+          type,
+          color
+        } = this.input; // Create PNG image URL
+
+        const url = fileType === 'svg' ? await svg2svg(this.svgEl) : await svg2png(this.svgEl, {
+          width,
+          height
+        }); // Create filename
+
+        const space = this.input.space ? 'space' : undefined;
+        const filename = ['oysters', type, space, color, `${width}x${height}`].join('-');
+
+        _download({
+          url,
+          filename
+        });
+      }
+    }, {
+      kind: "method",
+      key: "handleChange",
+      value: function handleChange(e) {
+        const target = e.currentTarget;
+
+        if (target.name === 'width' || target.name === 'height') {
+          return this.resize({
+            direction: target.name,
+            value: Number(target.value)
+          });
+        }
+
+        if (target.name === 'type') {
+          this.forceUpdateSize = true;
+        }
+
+        this.input = { ...this.input,
+          [target.name]: target.value
+        };
+      }
+    }, {
+      kind: "method",
+      key: "updated",
+      value: function updated() {
+        if (this.forceUpdateSize) {
+          this.resize({
+            direction: 'width',
+            value: this.DEFAULT_WIDTH
+          });
+          this.forceUpdateSize = false;
+        }
+      }
     }, {
       kind: "method",
       key: "render",
       value: function render() {
         return html`
-      <h1 class="${tw`py-8 text-3xl font-bold text-center`}">
-        Oysters Logo Generator
-      </h1>
-      <oysters-brand-editor></oysters-brand-editor>
-      <div>
-        <p class="${tw`py-8 text-center`}">
-          &copy; ${this.year} <a href="https://oystersjp.github.io">Oysters</a>
-        </p>
+      <div class="${tw`m-auto max-w-[860px]`}">
+        <div
+          class="${tw`grid md:grid-cols-2 gap-4 p-7`}"
+          style="background: var(--oysters-colors-gray-200)"
+        >
+          <div
+            class="${tw`relative flex items-center justify-center shadow-inner ${styles.canvas}`}"
+          >
+            <div
+              id="canvas"
+              style="--svg-width: ${this.input.width}px;--svg-height: ${this.input.height}px;"
+            >
+              ${svg`${unsafeSVG(this.rawSVG)}`}
+            </div>
+            <div
+              class="${tw`absolute bottom-0 right-0 flex flex-end space-x-2 p-2`}"
+            >
+              <button
+                class="${tw(styles.button)}"
+                @click="${e => this.download(e, 'png')}"
+              >
+                PNG
+              </button>
+              <button
+                class="${tw(styles.button)}"
+                @click="${e => this.download(e, 'svg')}"
+              >
+                SVG
+              </button>
+            </div>
+          </div>
+          <form class="${tw`space-y-2`}">
+            <fieldset>
+              <legend class="${tw`text-l font-semibold`}">ロゴのタイプ</legend>
+              <div class="${tw`grid grid-cols-2 gap-2 py-3`}">
+                <form-radio-button
+                  name="type"
+                  value="logo"
+                  ?checked="${this.input.type === 'logo'}"
+                  @change="${this.handleChange}"
+                  >${svg`${unsafeSVG(OystersLogoLight)}`}</form-radio-button
+                >
+                <form-radio-button
+                  name="type"
+                  value="icon"
+                  ?checked="${this.input.type === 'icon'}"
+                  @change="${this.handleChange}"
+                  >${svg`${unsafeSVG(OystersIconLight)}`}</form-radio-button
+                >
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend class="${tw`text-l font-semibold`}">色</legend>
+              <div class="${tw`grid grid-cols-2 gap-2 py-3`}">
+                <form-radio-button
+                  name="color"
+                  value="dark"
+                  ?checked="${this.input.color === 'dark'}"
+                  @change="${this.handleChange}"
+                  ><i
+                    class="${tw(styles.icon.lightColor)}"
+                    aria-hidden="true"
+                  ></i
+                  ><span class="${tw`ml-2`}">明るい</span></form-radio-button
+                >
+                <form-radio-button
+                  name="color"
+                  value="light"
+                  ?checked="${this.input.color === 'light'}"
+                  @change="${this.handleChange}"
+                  ><i
+                    class="${tw(styles.icon.darkColor)}"
+                    aria-hidden="true"
+                  ></i
+                  ><span class="${tw`ml-2`}">暗い</span></form-radio-button
+                >
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend class="${tw`text-l font-semibold pb-4`}">大きさ</legend>
+              <label class="${tw`inline-flex items-center`}"
+                ><span class="${tw`mr-2`}">W</span
+                ><input
+                  type="number"
+                  name="width"
+                  value="${this.input.width}"
+                  class="${tw(styles.input)}"
+                  @change="${this.handleChange}" /></label
+              ><label class="${tw`inline-flex items-center`}"
+                ><span class="${tw`mx-2`}">H</span
+                ><input
+                  type="number"
+                  name="height"
+                  class="${tw(styles.input)}"
+                  value="${this.input.height}"
+                  @change="${this.handleChange}"
+              /></label>
+            </fieldset>
+          </form>
+        </div>
       </div>
     `;
       }

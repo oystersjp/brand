@@ -1,6 +1,6 @@
-import { formInput } from '../../../../_snowpack/pkg/@twind/forms.js';
-import { apply } from '../../../../_snowpack/pkg/twind.js';
-import { css } from '../../../../_snowpack/pkg/twind/css.js';
+import { formInput } from '../../../_snowpack/pkg/@twind/forms.js';
+import { apply } from '../../../_snowpack/pkg/twind.js';
+import { css } from '../../../_snowpack/pkg/twind/css.js';
 export const styles = {
   button: css`
     & {
@@ -14,7 +14,7 @@ export const styles = {
       ${apply`mr-1`}
       content: '';
       display: inline-block;
-      background-image: url('/brand/icon_download.svg');
+      background-image: url('/icon_download.svg');
       width: 24px;
       height: 24px;
     }

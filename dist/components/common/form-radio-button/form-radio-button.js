@@ -30,8 +30,8 @@ function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symb
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-import { customElement, html, LitElement, property } from '../../../../../_snowpack/pkg/lit-element.js';
-import { create, cssomSheet } from '../../../../../_snowpack/pkg/twind.js';
+import { customElement, html, LitElement, property } from '../../../../_snowpack/pkg/lit-element.js';
+import { create, cssomSheet } from '../../../../_snowpack/pkg/twind.js';
 import { styles } from './styles.js';
 const sheet = cssomSheet({
   target: new CSSStyleSheet()

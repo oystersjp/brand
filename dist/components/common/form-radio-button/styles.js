@@ -1,4 +1,4 @@
-import { css } from '../../../../../_snowpack/pkg/twind/css.js';
+import { css } from '../../../../_snowpack/pkg/twind/css.js';
 export const styles = {
   formRadioInput: css`
     --color-primary: var(--oysters-colors-blue-100);
@@ -28,7 +28,7 @@ export const styles = {
       content: '';
       width: var(--width);
       height: var(--width);
-      background-image: url('/brand/icon_check.svg');
+      background-image: url('/icon_check.svg');
       background-size: cover;
       position: absolute;
       top: calc(var(--width) * 0.5 * -1);

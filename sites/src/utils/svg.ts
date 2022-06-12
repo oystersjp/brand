@@ -37,3 +37,11 @@ export const svg2png = (
     const svgStr = new XMLSerializer().serializeToString(svgEl)
     image.src = 'data:image/svg+xml;charset=utf-8;base64,' + btoa(svgStr)
   })
+
+export const svg2svg = (svgEl: SVGSVGElement): Promise<string> =>
+  new Promise((resolve) => {
+    const serializer = new XMLSerializer()
+    const source = serializer.serializeToString(svgEl)
+
+    resolve('data:image/svg+xml,' + encodeURIComponent(source))
+  })

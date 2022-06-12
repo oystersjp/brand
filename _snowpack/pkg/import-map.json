@@ -1,9 +1,0 @@
-{
-  "imports": {
-    "@twind/forms": "./@twind/forms.js",
-    "lit-element": "./lit-element.js",
-    "lit-html/directives/unsafe-svg": "./lit-html/directives/unsafe-svg.js",
-    "twind": "./twind.js",
-    "twind/css": "./twind/css.js"
-  }
-}

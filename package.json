@@ -1,7 +1,7 @@
 {
   "name": "oysters-brand",
   "version": "1.0.0",
-  "description": "## Logo",
+  "description": "Oysters logo generator",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -22,9 +22,9 @@
     "lint-staged": "^11.1.0"
   },
   "lint-staged": {
-    "sites/*": [
-      "npm run --prefix sites fmt:eslint",
-      "npm run --prefix sites fmt:prettier"
+    "site/*": [
+      "npm run --prefix site fmt:eslint",
+      "npm run --prefix site fmt:prettier"
     ]
   }
 }

@@ -161,12 +161,14 @@ export class OystersBrandEditor extends LitElement {
               class="${tw`absolute bottom-0 right-0 flex flex-end space-x-2 p-2`}"
             >
               <button
+                aria-label="PNG形式でダウンロード"
                 class="${tw(styles.button)}"
                 @click="${(e: Event) => this.download(e, 'png')}"
               >
                 PNG
               </button>
               <button
+                aria-label="SVG形式でダウンロード"
                 class="${tw(styles.button)}"
                 @click="${(e: Event) => this.download(e, 'svg')}"
               >
@@ -179,6 +181,7 @@ export class OystersBrandEditor extends LitElement {
               <legend class="${tw`text-l font-semibold`}">ロゴのタイプ</legend>
               <div class="${tw`grid grid-cols-2 gap-2 py-3`}">
                 <form-radio-button
+                  data-testid="logo-type-logo"
                   name="type"
                   id="logo-text"
                   value="logo"
@@ -188,6 +191,7 @@ export class OystersBrandEditor extends LitElement {
                   >${svg`${unsafeSVG(OystersLogoDark)}`}</form-radio-button
                 >
                 <form-radio-button
+                  data-testid="logo-type-icon"
                   name="type"
                   id="logo-icon"
                   value="icon"

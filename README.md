@@ -1,6 +1,6 @@
 # Oysters Logo
 
-その他のサイズをお求めの方はこちら 👉 oystersjp.github.io/brand
+その他のサイズをお求めの方はこちら 👉 https://oystersjp.github.io/brand
 
 ## Logo
 

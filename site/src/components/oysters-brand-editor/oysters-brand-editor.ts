@@ -14,10 +14,10 @@ import { create, cssomSheet } from 'twind'
 
 import { download } from '@/utils/download'
 import { getSize, resize, svg2png, svg2svg } from '@/utils/svg'
-import OystersIconDark from '~/svg/oysters-icon-space.svg'
-import OystersIconLight from '~/svg/oysters-icon-space-white.svg'
-import OystersLogoDark from '~/svg/oysters-logo-space.svg'
-import OystersLogoLight from '~/svg/oysters-logo-space-white.svg'
+import OystersIconLight from '~/svg/oysters-icon-space.svg'
+import OystersIconDark from '~/svg/oysters-icon-space-white.svg'
+import OystersLogoLight from '~/svg/oysters-logo-space.svg'
+import OystersLogoDark from '~/svg/oysters-logo-space-white.svg'
 
 import { styles } from './styles'
 
@@ -39,7 +39,7 @@ export class OystersBrandEditor extends LitElement {
   @property({ reflect: true, type: Object })
   private input = {
     type: 'logo' as 'logo' | 'icon',
-    color: 'dark' as 'dark' | 'light',
+    color: 'light' as 'light' | 'dark',
     width: 100,
     height: 100,
     space: true,
@@ -161,12 +161,14 @@ export class OystersBrandEditor extends LitElement {
               class="${tw`absolute bottom-0 right-0 flex flex-end space-x-2 p-2`}"
             >
               <button
+                aria-label="PNG形式でダウンロード"
                 class="${tw(styles.button)}"
                 @click="${(e: Event) => this.download(e, 'png')}"
               >
                 PNG
               </button>
               <button
+                aria-label="SVG形式でダウンロード"
                 class="${tw(styles.button)}"
                 @click="${(e: Event) => this.download(e, 'svg')}"
               >
@@ -185,7 +187,7 @@ export class OystersBrandEditor extends LitElement {
                   ?checked="${this.input.type === 'logo'}"
                   @change="${this.handleChange}"
                   aria-label="ロゴテキスト"
-                  >${svg`${unsafeSVG(OystersLogoLight)}`}</form-radio-button
+                  >${svg`${unsafeSVG(OystersLogoDark)}`}</form-radio-button
                 >
                 <form-radio-button
                   name="type"
@@ -194,18 +196,18 @@ export class OystersBrandEditor extends LitElement {
                   ?checked="${this.input.type === 'icon'}"
                   @change="${this.handleChange}"
                   aria-label="ロゴアイコン"
-                  >${svg`${unsafeSVG(OystersIconLight)}`}</form-radio-button
+                  >${svg`${unsafeSVG(OystersIconDark)}`}</form-radio-button
                 >
               </div>
             </fieldset>
             <fieldset>
-              <legend class="${tw`text-l font-semibold`}">色</legend>
+              <legend class="${tw`text-l font-semibold`}">背景色</legend>
               <div class="${tw`grid grid-cols-2 gap-2 py-3`}">
                 <form-radio-button
                   name="color"
-                  id="color-dark"
-                  value="dark"
-                  ?checked="${this.input.color === 'dark'}"
+                  id="color-light"
+                  value="light"
+                  ?checked="${this.input.color === 'light'}"
                   @change="${this.handleChange}"
                   ><i
                     class="${tw(styles.icon.lightColor)}"
@@ -215,9 +217,9 @@ export class OystersBrandEditor extends LitElement {
                 >
                 <form-radio-button
                   name="color"
-                  id="color-light"
-                  value="light"
-                  ?checked="${this.input.color === 'light'}"
+                  id="color-dark"
+                  value="dark"
+                  ?checked="${this.input.color === 'dark'}"
                   @change="${this.handleChange}"
                   ><i
                     class="${tw(styles.icon.darkColor)}"
@@ -229,23 +231,35 @@ export class OystersBrandEditor extends LitElement {
             </fieldset>
             <fieldset>
               <legend class="${tw`text-l font-semibold pb-4`}">大きさ</legend>
-              <label class="${tw`inline-flex items-center`}"
-                ><span class="${tw`mr-2`}">W</span
+              <div class="${tw`inline-flex items-center`}">
+                <label aria-label="ロゴ画像の幅" for="width" class="${tw`mr-2`}"
+                  >W</label
                 ><input
-                  type="number"
+                  id="width"
+                  type="text"
+                  inputmode="numeric"
                   name="width"
                   value="${this.input.width}"
                   class="${tw(styles.input)}"
-                  @change="${this.handleChange}" /></label
-              ><label class="${tw`inline-flex items-center`}"
-                ><span class="${tw`mx-2`}">H</span
+                  @change="${this.handleChange}"
+                />
+              </div>
+              <div class="${tw`inline-flex items-center`}">
+                <label
+                  aria-label="ロゴ画像の高さ"
+                  for="height"
+                  class="${tw`mx-2`}"
+                  >H</label
                 ><input
-                  type="number"
+                  id="height"
+                  type="text"
+                  inputmode="numeric"
                   name="height"
                   class="${tw(styles.input)}"
                   value="${this.input.height}"
                   @change="${this.handleChange}"
-              /></label>
+                />
+              </div>
             </fieldset>
           </form>
         </div>

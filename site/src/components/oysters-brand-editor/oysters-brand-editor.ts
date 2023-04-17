@@ -161,12 +161,14 @@ export class OystersBrandEditor extends LitElement {
               class="${tw`absolute bottom-0 right-0 flex flex-end space-x-2 p-2`}"
             >
               <button
+                aria-label="PNG形式でダウンロード"
                 class="${tw(styles.button)}"
                 @click="${(e: Event) => this.download(e, 'png')}"
               >
                 PNG
               </button>
               <button
+                aria-label="SVG形式でダウンロード"
                 class="${tw(styles.button)}"
                 @click="${(e: Event) => this.download(e, 'svg')}"
               >
@@ -229,23 +231,35 @@ export class OystersBrandEditor extends LitElement {
             </fieldset>
             <fieldset>
               <legend class="${tw`text-l font-semibold pb-4`}">大きさ</legend>
-              <label class="${tw`inline-flex items-center`}"
-                ><span class="${tw`mr-2`}">W</span
+              <div class="${tw`inline-flex items-center`}">
+                <label aria-label="ロゴ画像の幅" for="width" class="${tw`mr-2`}"
+                  >W</label
                 ><input
-                  type="number"
+                  id="width"
+                  type="text"
+                  inputmode="numeric"
                   name="width"
                   value="${this.input.width}"
                   class="${tw(styles.input)}"
-                  @change="${this.handleChange}" /></label
-              ><label class="${tw`inline-flex items-center`}"
-                ><span class="${tw`mx-2`}">H</span
+                  @change="${this.handleChange}"
+                />
+              </div>
+              <div class="${tw`inline-flex items-center`}">
+                <label
+                  aria-label="ロゴ画像の高さ"
+                  for="height"
+                  class="${tw`mx-2`}"
+                  >H</label
                 ><input
-                  type="number"
+                  id="height"
+                  type="text"
+                  inputmode="numeric"
                   name="height"
                   class="${tw(styles.input)}"
                   value="${this.input.height}"
                   @change="${this.handleChange}"
-              /></label>
+                />
+              </div>
             </fieldset>
           </form>
         </div>

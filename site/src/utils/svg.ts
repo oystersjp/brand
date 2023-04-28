@@ -29,7 +29,7 @@ export const svg2png = (
     const image = new Image()
     image.onload = () => {
       ctx?.drawImage(image, 0, 0, image.width, image.height)
-      resolve(canvas.toDataURL())
+      resolve(canvas.toDataURL('image/png'))
     }
 
     image.onerror = reject

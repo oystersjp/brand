@@ -239,7 +239,7 @@ export class OystersBrandEditor extends LitElement {
                   type="text"
                   inputmode="numeric"
                   name="width"
-                  value="${this.input.width}"
+                  .value="${this.input.width}"
                   class="${tw(styles.input)}"
                   @change="${this.handleChange}"
                 />
@@ -256,7 +256,7 @@ export class OystersBrandEditor extends LitElement {
                   inputmode="numeric"
                   name="height"
                   class="${tw(styles.input)}"
-                  value="${this.input.height}"
+                  .value="${this.input.height}"
                   @change="${this.handleChange}"
                 />
               </div>

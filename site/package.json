@@ -8,7 +8,7 @@
     "fmt:prettier": "npm run lint:prettier -- --write",
     "lint": "npm run lint:eslint",
     "lint:eslint": "eslint \"**\"",
-    "lint:prettier": "prettier --check **"
+    "lint:prettier": "prettier --check --ignore-path .gitignore"
   },
   "dependencies": {
     "@twind/forms": "^0.1.4",

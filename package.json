@@ -24,7 +24,7 @@
   "lint-staged": {
     "site/*": [
       "npm run --prefix site fmt:eslint",
-      "npm run --prefix site fmt:prettier"
+      "npm run --prefix site fmt:prettier -- **/*.{js,jsx,ts,tsx,json}"
     ]
   }
 }

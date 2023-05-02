@@ -14,10 +14,10 @@ import { create, cssomSheet } from 'twind'
 
 import { download } from '@/utils/download'
 import { getSize, resize, svg2png, svg2svg } from '@/utils/svg'
-import OystersIconLight from '~/svg/oysters-icon-space.svg'
-import OystersIconDark from '~/svg/oysters-icon-space-white.svg'
-import OystersLogoLight from '~/svg/oysters-logo-space.svg'
-import OystersLogoDark from '~/svg/oysters-logo-space-white.svg'
+import OystersIconLight from '~/svg/oysters-icon-space.svg?raw'
+import OystersIconDark from '~/svg/oysters-icon-space-white.svg?raw'
+import OystersLogoLight from '~/svg/oysters-logo-space.svg?raw'
+import OystersLogoDark from '~/svg/oysters-logo-space-white.svg?raw'
 
 import { styles } from './styles'
 
@@ -28,7 +28,7 @@ const { tw } = create({ sheet })
 export class OystersBrandEditor extends LitElement {
   static styles = [sheet.target]
 
-  @query('#canvas svg') svgEl: null | SVGSVGElement = null
+  @query('#canvas svg') svgEl!: SVGSVGElement
 
   @state()
   private DEFAULT_WIDTH = 300

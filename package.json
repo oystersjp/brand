@@ -22,9 +22,9 @@
     "lint-staged": "^11.1.0"
   },
   "lint-staged": {
-    "site/*": [
+    "site/*.{js,jsx,ts,tsx,json}": [
       "npm run --prefix site fmt:eslint",
-      "npm run --prefix site fmt:prettier -- **/*.{js,jsx,ts,tsx,json}"
+      "npm run --prefix site fmt:prettier"
     ]
   }
 }

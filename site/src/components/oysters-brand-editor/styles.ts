@@ -22,6 +22,10 @@ export const styles = {
     &:hover {
       background-color: rgba(255, 255, 255, 1);
     }
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 2px 2px var(--oysters-colors-blue-100);
+    }
   `,
   input: css`
     & {
@@ -37,7 +41,8 @@ export const styles = {
       padding: 0.15em 0.5em;
     }
     &:focus {
-      border-color: var(--oysters-colors-blue-100);
+      outline: none;
+      box-shadow: 0 0 2px 2px var(--oysters-colors-blue-100);
     }
   `,
   canvas: css`

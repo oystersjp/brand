@@ -41,6 +41,10 @@ export const styles = {
       max-height: 100%;
     }
 
+    input:focus + label {
+      box-shadow: 0 0 2px 2px var(--color-primary);
+    }
+
     input:checked + label {
       border-color: var(--color-primary);
     }
@@ -53,7 +57,6 @@ export const styles = {
       width: 0;
       height: 0;
       opacity: 0;
-      pointer-events: none;
     }
   `,
 }

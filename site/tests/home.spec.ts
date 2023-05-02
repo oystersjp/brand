@@ -40,13 +40,15 @@ test.describe('Home', () => {
       await page
         .getByLabel(logoType === 'logo' ? 'ロゴテキスト' : 'ロゴアイコン')
         .click()
-      // 背景色
-      await page.getByText(color === 'light' ? '明るい' : '暗い').click()
+
       // 大きさ
       await page.getByLabel('ロゴ画像の高さ').clear()
       await page.getByLabel('ロゴ画像の高さ').fill(height.toString())
       await page.getByLabel('ロゴ画像の幅').clear()
       await page.getByLabel('ロゴ画像の幅').fill(width.toString())
+
+      // 背景色
+      await page.getByText(color === 'light' ? '明るい' : '暗い').click()
 
       for (const filetype of ['png', 'svg']) {
         const downloadPromise = page.waitForEvent('download', { timeout: 1000 })

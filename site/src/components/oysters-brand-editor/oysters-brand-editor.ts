@@ -130,13 +130,23 @@ export class OystersBrandEditor extends LitElement {
       this.forceUpdateSize = true
     }
 
-    this.input = { ...this.input, [target.name]: target.value } as any
+    this.input = { ...this.input, [target.name]: target.value }
   }
 
   updated() {
     if (this.forceUpdateSize) {
       this.resize({ direction: 'width', value: this.DEFAULT_WIDTH })
       this.forceUpdateSize = false
+      return
+    }
+
+    const { width, height } = this.getSvgSize()
+    if (!(width === this.input.width && height === this.input.height)) {
+      this.svgEl &&
+        resize(this.svgEl, {
+          width: this.input.width,
+          height: this.input.height,
+        })
     }
   }
 

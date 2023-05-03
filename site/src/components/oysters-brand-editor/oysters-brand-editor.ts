@@ -16,10 +16,10 @@ import { download } from '@/utils/download'
 import { getSize, resize, svg2png, svg2svg } from '@/utils/svg'
 
 import { styles } from './styles'
-import { getLogoImages } from './helpers'
+import { getLogoImages, Query } from './helpers'
 
-import OystersIconDark from '~/svg/oysters-icon-space-white.svg?raw'
-import OystersLogoDark from '~/svg/oysters-logo-space-white.svg?raw'
+import OystersLogoDark from '~/svg/oysters-logo-transparent-dark.svg?raw'
+import OystersIconDark from '~/svg/oysters-icon-transparent-dark.svg?raw'
 
 const sheet = cssomSheet({ target: new CSSStyleSheet() })
 const { tw } = create({ sheet })
@@ -47,7 +47,13 @@ export class OystersBrandEditor extends LitElement {
 
   @state()
   private get rawSVG() {
-    return getLogoImages(this.input)
+    const query: Query = {
+      type: this.input.type,
+      color: this.input.color,
+      style: 'transparent',
+    }
+
+    return getLogoImages(query)?.raw
   }
 
   resize({

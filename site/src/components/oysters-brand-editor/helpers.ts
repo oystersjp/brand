@@ -1,24 +1,29 @@
-import OystersLogoLight from '~/svg/oysters-logo-space.svg?raw'
-import OystersLogoDark from '~/svg/oysters-logo-space-white.svg?raw'
-import OystersIconLight from '~/svg/oysters-icon-space.svg?raw'
-import OystersIconDark from '~/svg/oysters-icon-space-white.svg?raw'
+import OystersLogoLight from '~/svg/oysters-logo-transparent-light.svg?raw'
+import OystersLogoDark from '~/svg/oysters-logo-transparent-dark.svg?raw'
+import OystersIconLight from '~/svg/oysters-icon-transparent-light.svg?raw'
+import OystersIconDark from '~/svg/oysters-icon-transparent-dark.svg?raw'
 
-type Options = {
-  type: 'logo' | 'icon'
-  color: 'light' | 'dark'
-}
+export type Query =
+  | {
+      type: 'logo'
+      color: 'light' | 'dark'
+      style: 'no-margin' | 'transparent'
+    }
+  | {
+      type: 'icon'
+      color: 'light' | 'dark'
+      style: 'no-margin' | 'bgcolor' | 'rounded' | 'transparent'
+    }
 
-export const getLogoImages = ({ type, color }: Options) => {
-  const imageMap = {
-    logo: {
-      dark: OystersLogoDark,
-      light: OystersLogoLight,
-    },
-    icon: {
-      dark: OystersIconDark,
-      light: OystersIconLight,
-    },
-  }
+export const logoImageList = [
+  { type: 'logo', color: 'dark', style: 'transparent', raw: OystersLogoDark },
+  { type: 'logo', color: 'light', style: 'transparent', raw: OystersLogoLight },
+  { type: 'icon', color: 'dark', style: 'transparent', raw: OystersIconDark },
+  { type: 'icon', color: 'light', style: 'transparent', raw: OystersIconLight },
+] as const
 
-  return imageMap[type][color]
+export const getLogoImages = ({ type, color }: Query) => {
+  return logoImageList.find(
+    (image) => image.type === type && image.color === color
+  )
 }

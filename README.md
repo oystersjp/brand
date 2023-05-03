@@ -4,14 +4,14 @@
 
 ## Logo
 
-| Type  | Logo                                                  | Logo + Space                                                      |
-| ----- | ----------------------------------------------------- | ----------------------------------------------------------------- |
-| Light | ![oysters-logo.svg](svg/oysters-logo.svg)             | ![oysters-logo-space.svg](svg/oysters-logo-space.svg)             |
-| Dark  | ![oysters-logo-white.svg](svg/oysters-logo-white.svg) | ![oysters-logo-space-white.svg](svg/oysters-logo-space-white.svg) |
+| Type  | Logo                                        | Logo (No Margin)                          |
+| ----- | ------------------------------------------- | ----------------------------------------- |
+| Light | ![](svg/oysters-logo-transparent-light.svg) | ![](svg/oysters-logo-no-margin-light.svg) |
+| Dark  | ![](svg/oysters-logo-transparent-dark.svg)  | ![](svg/oysters-logo-no-margin-dark.svg)  |
 
 ## Icon
 
-| Type  | Icon                                                  | Icon + Space                                                      | Icon Square                                                         | Icon Rounded Square                                                                 |
-| ----- | ----------------------------------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| Light | ![oysters-icon.svg](svg/oysters-icon.svg)             | ![oysters-icon-space.svg](svg/oysters-icon-space.svg)             | ![oysters-icon-square.svg](svg/oysters-icon-square.svg)             | ![oysters-icon-rounded-square.svg](svg/oysters-icon-rounded-square.svg)             |
-| Dark  | ![oysters-icon-white.svg](svg/oysters-icon-white.svg) | ![oysters-icon-space-white.svg](svg/oysters-icon-space-white.svg) | ![oysters-icon-square-white.svg](svg/oysters-icon-square-white.svg) | ![oysters-icon-rounded-square-white.svg](svg/oysters-icon-rounded-square-white.svg) |
+| Type  | Icon                                        | Icon (No Margin)                          | Icon (Background Color)                 | Icon Rounded                     |
+| ----- | ------------------------------------------- | ----------------------------------------- | --------------------------------------- | --------------------------------------- |
+| Light | ![](svg/oysters-icon-transparent-light.svg) | ![](svg/oysters-icon-no-margin-light.svg) | ![](svg/oysters-icon-bgcolor-light.svg) | ![](svg/oysters-icon-rounded-light.svg) |
+| Dark  | ![](svg/oysters-icon-transparent-dark.svg)  | ![](svg/oysters-icon-no-margin-dark.svg)  | ![](svg/oysters-icon-bgcolor-dark.svg)  | ![](svg/oysters-icon-rounded-dark.svg)  |

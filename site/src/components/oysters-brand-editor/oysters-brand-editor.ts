@@ -14,12 +14,12 @@ import { create, cssomSheet } from 'twind'
 
 import { download } from '@/utils/download'
 import { getSize, resize, svg2png, svg2svg } from '@/utils/svg'
-import OystersIconLight from '~/svg/oysters-icon-space.svg?raw'
-import OystersIconDark from '~/svg/oysters-icon-space-white.svg?raw'
-import OystersLogoLight from '~/svg/oysters-logo-space.svg?raw'
-import OystersLogoDark from '~/svg/oysters-logo-space-white.svg?raw'
 
 import { styles } from './styles'
+import { getLogoImages } from './helpers'
+
+import OystersIconDark from '~/svg/oysters-icon-space-white.svg?raw'
+import OystersLogoDark from '~/svg/oysters-logo-space-white.svg?raw'
 
 const sheet = cssomSheet({ target: new CSSStyleSheet() })
 const { tw } = create({ sheet })
@@ -47,18 +47,7 @@ export class OystersBrandEditor extends LitElement {
 
   @state()
   private get rawSVG() {
-    const svg = {
-      logo: {
-        dark: OystersLogoDark,
-        light: OystersLogoLight,
-      },
-      icon: {
-        dark: OystersIconDark,
-        light: OystersIconLight,
-      },
-    }
-
-    return svg[this.input.type][this.input.color]
+    return getLogoImages(this.input)
   }
 
   resize({

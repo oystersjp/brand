@@ -1,15 +1,8 @@
 import '@/components/common/form-radio-button'
 
-import {
-  customElement,
-  html,
-  LitElement,
-  property,
-  query,
-  state,
-  svg,
-} from 'lit-element'
-import { unsafeSVG } from 'lit-html/directives/unsafe-svg'
+import { html, LitElement, svg } from 'lit'
+import { customElement, property, query, state } from 'lit/decorators.js'
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js'
 import { create, cssomSheet } from 'twind'
 
 import { download } from '@/utils/download'

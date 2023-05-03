@@ -14,8 +14,7 @@
   },
   "dependencies": {
     "@twind/forms": "^0.1.4",
-    "lit-element": "^2.4.0",
-    "lit-html": "^1.4.0",
+    "lit": "^2.7.3",
     "twind": "^0.16.17"
   },
   "devDependencies": {

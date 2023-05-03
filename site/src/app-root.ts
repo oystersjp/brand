@@ -1,7 +1,8 @@
 import '@/components/oysters-brand-editor'
 
 import { forms } from '@twind/forms'
-import { customElement, html, LitElement } from 'lit-element'
+import { html, LitElement } from 'lit'
+import { customElement } from 'lit/decorators.js'
 import { apply, create, cssomSheet, setup } from 'twind'
 import { css } from 'twind/css'
 
